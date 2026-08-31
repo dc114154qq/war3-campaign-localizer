@@ -1,0 +1,4 @@
+interface:
+  display_name: "Warcraft III Campaign Localizer"
+  short_description: "高质量汉化多语种 Warcraft III 自定义战役"
+  default_prompt: "Use $war3-campaign-localizer to fully localize this English or other foreign-language Warcraft III campaign into polished Chinese while changing only player-visible text and preserving all gameplay data and logic."
