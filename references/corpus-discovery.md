@@ -68,12 +68,15 @@ Search `war3map.j`, `war3map.lua`, and imported script files for visible literal
 
 - `DisplayText*`, `QuestSet*`, `CreateQuest`, `SetMapDescription`;
 - cinematic subtitles and transmissions;
+- cinematic speaker labels and runtime unit names, including direct strings passed to custom actor constructors such as `ScreenplayFactory.createActor`, `BlzSetUnitName`, and `BlzSetHeroProperName`;
 - leaderboard, multiboard, timer, dialog, button, and game-message APIs;
 - dynamically assembled tooltips or objectives.
 
 The inventory reports every script string literal. It classifies literals on visible API calls and literals assigned to variables later used by visible APIs, but the unclassified remainder still requires manual review. This deliberate over-collection prevents dynamically assembled text from being missed.
 
 Do not translate rawcodes, function names, paths, order strings, cache keys, or debug-only markers without evidence they display.
+
+Speaker names are a separate visible layer from dialogue bodies. A translated `ScreenplayMessages` table does not localize an actor name supplied by a constructor or copied from a runtime unit name. Inventory and review every explicit actor-name argument and every runtime name setter, then scan the localized scripts for remaining Latin speaker labels before release.
 
 ### Map metadata and images
 
@@ -113,4 +116,3 @@ The report must include:
 - duplicates, missing references, and decoding failures.
 
 Use this report to define translation segments and final expected counts.
-

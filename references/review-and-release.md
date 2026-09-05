@@ -1,27 +1,42 @@
 # Review and Release
 
+## Authorship gate
+
+Translation prose must be authored directly from the original source by the executing reasoning agent or a human writer. Extraction, inventory, consistency checks, and packaging may be automated; translation drafting may not. Do not use machine translation, translation APIs, browser translators, LLM batch-translation endpoints, MT caches, automatic dictionary substitution, or generated translation worksheets at any stage.
+
+Every translated writer record must use `provenance: "agent_authored"` or `provenance: "human_authored"`. A deliberately preserved identity string may use `provenance: "source_reviewed_preservation"`. Missing or different provenance is a release blocker, regardless of later review quality.
+
 ## Writer/reviewer separation
 
 The writer produces a patch mapping stable string keys to final Chinese. The reviewer compares the entire assigned source range with that patch. When subagents are available, use disjoint ownership and a separate verifier. Without subagents, perform two temporally separated passes and do not reuse the writer's conclusions as review evidence.
 
-The reviewer must inspect every record, not a sample.
+The reviewer must inspect every record, not a sample. The evidence must be a manifest containing the source fingerprint, every reviewed stable key, the reviewed count, and an issues array. A bare empty array is never sufficient evidence of full review.
+
+Before release, group all visible records by exact source text and fail on competing translations unless each variation is listed in an explicit context exception. Re-run the glossary scan after applying reviewer fixes; a terminology decision is not complete until every source occurrence uses the canonical target in campaign, maps, object data, scripts, quests, and UI.
 
 ## Review issue schema
 
-Use a JSON array:
+Use a JSON object manifest:
 
 ```json
-[
-  {
-    "key": "11_Dalaran/135",
-    "severity": "high",
-    "source": "Original-language source",
-    "localized": "Current Chinese",
-    "context": ["war3map.wts", "quest objective"],
-    "issue": "The time condition was changed into a different objective.",
-    "suggested": "Complete corrected Chinese"
-  }
-]
+{
+  "segment": "11_Dalaran",
+  "record_file": "writer-maps/11_Dalaran.json",
+  "source_fingerprint": "SHA256",
+  "reviewed_keys": ["135", "136"],
+  "reviewed_count": 2,
+  "issues": [
+    {
+      "key": "11_Dalaran/135",
+      "severity": "high",
+      "source": "Original-language source",
+      "localized": "Current Chinese",
+      "context": ["war3map.wts", "quest objective"],
+      "issue": "The time condition was changed into a different objective.",
+      "suggested": "Complete corrected Chinese"
+    }
+  ]
+}
 ```
 
 Severity:
@@ -174,4 +189,3 @@ Include:
 - archive flags and full extraction result;
 - actual client versions smoke-tested;
 - any remaining gap.
-

@@ -5,7 +5,7 @@ description: Fully localize English, Russian, European-language, or other foreig
 
 # Warcraft III Campaign Localizer
 
-Produce a finished Chinese localization that reads like a well-edited Warcraft campaign, not a machine-translated draft. This skill is standalone: do not invoke or require another skill. Use the bundled scripts, these references, and locally available MPQ/media tools.
+Produce a finished Chinese localization authored directly from the source text by the executing reasoning agent. This skill is standalone: do not invoke or require another skill. Use the bundled scripts, these references, and locally available MPQ/media tools.
 
 ## Required references
 
@@ -20,7 +20,9 @@ Read these before acting:
 - Translate every player-visible string, including campaign selection text, every map WTS record, campaign/map object data, direct JASS/Lua strings, and text embedded in visible images.
 - Support English and any other identifiable source language. Detect the language and encoding per corpus or segment; mixed-language campaigns must not be forced through one language assumption.
 - Preserve author names, usernames, email addresses, brands, resource credits, raw identifiers, and fictional-language phrases when translation would destroy identity or attribution.
-- Treat automated translation only as a disposable draft. Every visible record must receive source-based semantic review.
+- Do not use machine translation, translation APIs, browser translators, LLM batch-translation endpoints, MT caches, automatic dictionary substitution, or machine-generated translation worksheets at any stage, including drafting.
+- The executing reasoning agent must personally read the original source and author every Chinese translation in context. Automation may inventory, extract, validate, compare, and package text, but it may never generate translated prose.
+- Before packaging, every visible translated record must carry explicit `agent_authored` or `human_authored` provenance tied to its original source key. Missing, rewritten, or inherited provenance is a release failure.
 - Resolve ambiguous gameplay text against object fields and scripts. If the source wording contradicts actual behavior, prefer the behavior for objectives and mechanics, and record the correction.
 - Change only player-visible text payloads. Do not change models, model paths, textures outside text-bearing image regions, balance, object IDs, non-text object fields, trigger logic, script code, map geometry, sounds, archive membership, or campaign progress.
 - When visible text is stored in W3F, object data, or JASS/Lua, alter only that text field or string literal. Prove the surrounding structure is unchanged with `scripts/text_only_verify.py`.
@@ -40,6 +42,7 @@ Read these before acting:
    - Review its W3F direct-text list, every script literal classification, and every visual manifest row; no unresolved decoding or missing-reference record may remain.
    - Parse WTS with `scripts/wts_tool.py`; count every `^STRING` declaration, including records with `// Units`, `// Abilities`, `// Doodads`, or similar comments.
    - Include `war3campaign.w3f` references, all `TRIGSTR_*` references in campaign/map object files, direct script strings, loading screens, credits, and visual assets likely to contain text.
+   - Treat speaker labels as a separate corpus layer: inventory explicit names passed to `ScreenplayFactory.createActor`, `BlzSetUnitName`, and `BlzSetHeroProperName`; run `scripts/speaker_name_audit.py` after translation and require zero unapproved Latin names.
    - Default to translating uncertain records. Exclude a record only with evidence that it is an internal raw/effect/dummy label.
 
 3. **Establish terminology and voice**
@@ -48,21 +51,28 @@ Read these before acting:
    - If a high-quality Chinese campaign is available, use it only as a style and terminology reference; never copy unrelated prose.
    - Lock glossary choices across all chapters and object data.
 
-4. **Translate in context**
+4. **Author every translation in context**
    - Split by disjoint chapters and object-ID ranges when parallel work helps.
-   - Give each translator the original-language source, current draft, field/reference context, glossary, and exclusive output ownership.
+   - Give each reasoning-agent or human writer the original-language source, field/reference context, glossary, and exclusive output ownership. Never provide or generate an automatic translation draft.
+   - Require the assigned writer to read the source record and write the Chinese itself; do not call a translation service, translation model endpoint, browser translator, or bulk substitution tool.
    - Translate meaning, not word order. Dialogue must sound spoken; quests must state the exact action; tooltips must state targets, values, timing, and exceptions unambiguously.
    - Preserve all control codes, placeholders, raw field references, line breaks, and hotkey behavior.
 
 5. **Run an independent full review**
    - A reviewer other than the writer must compare every source/localized pair, not merely sample.
    - Review dialogue, objectives, negation, factions, names, numeric mechanics, hotkeys, and source omissions.
-   - Return an issue list with exact replacement text. Apply fixes and re-review until every segment report is an empty JSON array.
+   - Return a review manifest, not only an issue list. Each segment manifest must contain the source fingerprint, the complete `reviewed_keys` list (stable WTS ID or script/object key), `reviewed_count`, and an `issues` array with exact replacement text. An empty issues array without complete coverage evidence is invalid.
+   - Apply fixes and re-review until every segment manifest has complete key coverage, a matching source fingerprint, and an empty `issues` array. Run `scripts/semantic_review_gate.py` before packaging.
+   - The reviewer must actively search for machine-translation artifacts and “translated-looking” nonsense (repeated characters, wrong part of speech, literal UI terms, mixed scripts, mojibake, and source fragments). A clean residual-English scan is not sufficient evidence of quality.
+   - Group records by identical source text and require one canonical translation for every group. Any intentional variation must be listed by stable key with a reason; otherwise it is a release blocker.
+   - Re-run the terminology audit after every review pass. Every glossary term must have one canonical target across campaign WTS, map WTS, object fields, scripts, quests, and UI; a term appearing in a visible source but absent or replaced by a competing target is a release blocker.
    - “No source-language text remains” and “all IDs exist” are structural checks, not translation approval.
 
 6. **Merge and release**
    - Apply reviewed patches to a fresh clean extraction.
    - Run WTS tree verification, residual scans, glossary consistency scans, and the release gates in the review reference.
+   - Run `scripts/semantic_review_gate.py` against all writer records, review manifests, and the final glossary. A pass requires full review coverage, zero unresolved issues, zero unexplained same-source translation splits, and zero glossary conflicts.
+   - Run `scripts/speaker_name_audit.py` against the final extracted maps. A translated dialogue body does not prove its speaker label or runtime unit name was translated.
    - Run text-only structural verification for every changed W3F, object file, and script. Any non-text delta is a release blocker.
    - Rebuild nested maps first, then the campaign, preserving entry storage flags at both layers.
    - Run `scripts/archive_verify.py` on every rebuilt nested map and again on the outer campaign. All undeclared changes and flag differences are release blockers.
@@ -75,8 +85,14 @@ Do not package a final release while any of these remain:
 
 - missing or extra WTS IDs;
 - non-empty independent review reports;
+- review reports that are plain arrays, lack a source fingerprint, omit any stable key, or claim a count different from the covered keys;
+- any visible record not listed in exactly one independent review manifest;
+- unexplained multiple translations for one identical source string;
+- a glossary term with competing visible targets or a missing canonical target in a source occurrence;
 - unapproved control-code or placeholder differences;
 - known machine-translation artifacts, replacement characters, or literal escape text;
+- any record produced or drafted by a machine-translation engine, translation API, browser translator, LLM batch-translation endpoint, MT cache, or bulk dictionary pass;
+- any translated record whose provenance is missing or is not explicitly `agent_authored` or `human_authored`;
 - unexplained gameplay-number differences;
 - any non-text W3F, object-data, script-code, model/path, map, audio, or archive-membership change;
 - untranslated player-visible source-language text outside approved names, credits, raw labels, or fictional language;
@@ -94,4 +110,3 @@ Provide:
 - independent review status;
 - archive and client compatibility evidence;
 - backup path and any remaining validation gap.
-

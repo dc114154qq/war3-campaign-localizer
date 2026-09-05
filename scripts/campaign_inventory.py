@@ -20,6 +20,7 @@ VISIBLE_CALL_RE = re.compile(
     r"(?i)(DisplayText|Quest|Transmission|Cinematic|Multiboard|Leaderboard|"
     r"Dialog|Button|GameMessage|SetMapDescription|BlzFrameSetText|"
     r"BlzSetAbility(?:Extended)?Tooltip|BlzSetItem(?:Name|Description|Tooltip|ExtendedTooltip)|"
+    r"BlzSetUnitName|BlzSetHeroProperName|ScreenplayFactory\.createActor|"
     r"(?:Set|Create)TextTag|SetTextTagText)"
 )
 OBJECT_SUFFIXES = {".w3u", ".w3a", ".w3t", ".w3h", ".w3b", ".w3d", ".w3q", ".w3i"}

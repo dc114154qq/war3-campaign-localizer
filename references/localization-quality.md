@@ -1,11 +1,17 @@
 # Chinese Localization Quality
 
+## Authorship requirement
+
+Every Chinese translation must be written directly from the original source by the executing reasoning agent or a human writer. Do not use machine translation, translation APIs, browser translators, LLM batch-translation endpoints, MT caches, automatic dictionary substitution, or generated translation worksheets, even as drafts. Automated tools may extract and validate records, but they may not propose the Chinese wording.
+
+Each translated record must declare `provenance: "agent_authored"` or `provenance: "human_authored"`. A preserved identity string may instead use `provenance: "source_reviewed_preservation"` after the writer has inspected the original and deliberately chosen not to translate it.
+
 ## Source-language handling
 
 This workflow is not English-only. It applies to English, Russian, Polish, German, French, Spanish, Portuguese, Italian, Czech, Ukrainian, and other identifiable source languages, including campaigns that mix languages between chapters or assets.
 
 - Detect the language and encoding per file or coherent segment. Encoding (`UTF-8`, `cp1251`, `cp1252`, and so on) and language are separate facts.
-- Translate directly from the original language when its meaning can be established reliably. Do not turn a non-English source into an English machine-translation draft and then translate that draft into Chinese; the extra pivot loses names, negation, register, and mechanics.
+- Translate directly from the original language when its meaning can be established reliably. Do not generate an English or Chinese machine-translation draft first; the writer must establish meaning from the original plus context.
 - If a passage uses an unfamiliar language, obtain a literal semantic gloss first, then write the final Chinese from the original plus context. Mark unresolved ambiguity instead of inventing meaning.
 - Preserve speaker register, grammatical negation, certainty, gender/number cues, titles, faction relationships, and culturally meaningful names. Chinese should read naturally rather than imitate the source language's word order.
 - Establish transliteration from official Warcraft usage, author-provided spelling, lore identity, and source pronunciation. Do not translate a proper name merely because it resembles a common noun or verb.
@@ -25,6 +31,8 @@ Build a campaign glossary before translation and keep it versioned. Prefer, in o
 4. a concise descriptive translation when a custom mechanic needs clarity.
 
 Never let the same skill, item, unit, character, place, or faction use different names between dialogue, objectives, buttons, and object tooltips.
+
+After drafting, group identical source strings across every layer and choose one canonical target. Treat unexplained variants as translation defects, even when each individual sentence is grammatical. Re-scan all visible payloads after every glossary change; checking only records that contain no English is insufficient because competing Chinese terms can both pass a residual scan.
 
 ## Dialogue
 
@@ -118,4 +126,3 @@ Reject and retranslate records containing symptoms such as:
 - syntactically Chinese text whose subject, target, or mechanism cannot be explained.
 
 A source-language residual scan catches omissions; it does not establish semantic correctness.
-
