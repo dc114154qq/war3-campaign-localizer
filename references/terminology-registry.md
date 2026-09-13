@@ -1,6 +1,6 @@
 # Warcraft III 术语证据库
 
-此库用于查证和裁决，不生成或自动替换译文。JSON 导入契约为 v1，SQLite schema 为 v2。随 skill 交付的 `assets/war3-terminology.sqlite` 目前含一批从暴雪官方 1.36.1 更新说明逐条摘录的 `zh-TW` 名称证据；这些网页条目没有 rawcode，不能当作完整客户端词库。`assets/terminology-seed.json` 仍是可审核的空构建输入，便于以后从合法客户端提取资料重建。
+此库用于查证和裁决，不生成或自动替换译文。JSON 导入契约为 v1，SQLite schema 为 v2。当前 skill 不随附已填充的 SQLite 数据库或网页证据；`assets/terminology-seed.json` 是可审核的空构建输入，便于以后从合法客户端提取资料重建。没有导入证据时，术语不能被声明为官方裁决。
 
 只导入用户合法拥有并已提取的游戏资料，或小规模、可定位的公开 Blizzard 权威页面证据。不要下载盗版客户端/数据包，也不要抓取大型站点全文。
 
@@ -136,8 +136,8 @@ python scripts/term_registry.py import-evidence --db quality/war3-terms.sqlite `
 ## 命令
 
 ```powershell
-# 查看随附术语库（当前为官方网页证据小批次）
-python scripts/term_registry.py summary --db assets/war3-terminology.sqlite
+# 初始化项目自己的术语库（按需执行）
+python scripts/term_registry.py init --db quality/war3-terms.sqlite
 
 # 在新路径可靠重建并导入证据
 python scripts/term_registry.py init --db quality/war3-terms.sqlite
