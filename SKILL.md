@@ -16,6 +16,7 @@ Read these before acting:
 - [references/terminology-registry.md](references/terminology-registry.md) before accepting Warcraft terminology or importing evidence.
 - [references/entity-link-audit.md](references/entity-link-audit.md) before resolving object abilities or auditing tooltip mentions.
 - [references/review-and-release.md](references/review-and-release.md) before accepting a segment or writing an archive.
+- [references/shared-lore-registry.md](references/shared-lore-registry.md) when a name is shared with World of Warcraft or wider Warcraft lore.
 
 ## Non-negotiable outcome
 
@@ -52,6 +53,8 @@ Read these before acting:
    - Record the exact Warcraft III client version, distribution, and target locale. Import only auditable evidence into `scripts/term_registry.py`; never mix WoW, `zh-CN`/`zh-TW`, or different releases.
    - Query by scoped entity identity. Use exact-version Warcraft III official evidence first; if it is absent or ambiguous, retain the candidates and mark the term for human adjudication instead of inventing an “official” name.
    - Create a glossary before bulk translation: sourced official terms, clearly labeled custom decisions, factions, places, UI phrases, recurring names, skill names, item names, and hotkeys. Import final custom decisions as scoped `campaign_override` records.
+   - For shared Warcraft lore names, query `assets/shared-lore-terms.json` with `scripts/shared_lore_registry.py`. Keep `warcraft_iii` and `world_of_warcraft` scopes separate; WoW evidence may support a shared proper name but cannot silently replace a WC3 client/object name.
+   - A missing or conflicting shared-lore result is an explicit human-review item, not permission to invent an “official” Chinese name.
    - If a high-quality Chinese campaign is available, use it only as a style and terminology reference; never copy unrelated prose.
    - Lock glossary choices across all chapters and object data.
 

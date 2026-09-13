@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "scope": "shared_lore",
+  "sources": [
+    {
+      "source_key": "blizzard-wc3-story-so-far-23229617-zh-tw",
+      "publisher": "Blizzard Entertainment",
+      "source_kind": "official_reference",
+      "urls": {
+        "en-US": "https://news.blizzard.com/en-us/article/23229617/warcraft-iii-the-story-so-far",
+        "zh-TW": "https://news.blizzard.com/zh-tw/article/23229617/iii"
+      },
+      "retrieved_at": "2026-09-13",
+      "notes": "官方 Warcraft III 故事背景文章的英文与繁中对应页面；只证明共享世界观名称，不证明 WC3 rawcode。"
+    },
+    {
+      "source_key": "warcraft-wiki-shared-lore",
+      "publisher": "Warcraft Wiki community",
+      "source_kind": "verified_community_reference",
+      "urls": {"en-US": "https://warcraft.wiki.gg/wiki/Warcraft_III"},
+      "retrieved_at": "2026-09-13",
+      "notes": "社区交叉索引来源；必须回溯到官方游戏、手册或暴雪页面后才能提升为官方证据。"
+    },
+    {
+      "source_key": "wowhead-cn-database",
+      "publisher": "Wowhead community",
+      "source_kind": "verified_community_reference",
+      "urls": {"zh-CN": "https://www.wowhead.com/cn/database"},
+      "retrieved_at": "2026-09-13",
+      "notes": "WoW 中文数据库和志愿者本地化参考；不作为 WC3 客户端名称或 rawcode 的官方证明。"
+    }
+  ],
+  "terms": [
+    {"term_key":"lore:azeroth","entity_type":"world","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Azeroth","target_locale":"zh-TW","target_name":"艾澤拉斯","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-8"},
+    {"term_key":"lore:twisting-nether","entity_type":"cosmic_realm","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Twisting Nether","target_locale":"zh-TW","target_name":"扭曲虛空","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-15"},
+    {"term_key":"lore:titans","entity_type":"faction","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Titans","target_locale":"zh-TW","target_name":"泰坦","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-15"},
+    {"term_key":"lore:sargeras","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Sargeras","target_locale":"zh-TW","target_name":"薩格拉斯","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-15"},
+    {"term_key":"lore:burning-legion","entity_type":"faction","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Burning Legion","target_locale":"zh-TW","target_name":"燃燒軍團","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-15"},
+    {"term_key":"lore:medivh","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Medivh","target_locale":"zh-TW","target_name":"麥迪文","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-15"},
+    {"term_key":"lore:stormwind","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Stormwind","target_locale":"zh-TW","target_name":"暴風城","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-15"},
+    {"term_key":"lore:draenor","entity_type":"world","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Draenor","target_locale":"zh-TW","target_name":"德拉諾","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-16"},
+    {"term_key":"lore:guldan","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Gul'dan","target_locale":"zh-TW","target_name":"古爾丹","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-16"},
+    {"term_key":"lore:mannoroth","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Mannoroth","target_locale":"zh-TW","target_name":"瑪諾洛斯","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-16"},
+    {"term_key":"lore:blackhand","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Blackhand","target_locale":"zh-TW","target_name":"黑手","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-16"},
+    {"term_key":"lore:dark-portal","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Dark Portal","target_locale":"zh-TW","target_name":"黑暗之門","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-18"},
+    {"term_key":"lore:horde","entity_type":"faction","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Horde","target_locale":"zh-TW","target_name":"部落","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-18"},
+    {"term_key":"lore:anduin-lothar","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Anduin Lothar","target_locale":"zh-TW","target_name":"安杜因‧洛薩","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-21"},
+    {"term_key":"lore:khadgar","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Khadgar","target_locale":"zh-TW","target_name":"卡德加","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-23"},
+    {"term_key":"lore:orgrim-doomhammer","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Orgrim Doomhammer","target_locale":"zh-TW","target_name":"奧格林‧末日錘","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-25"},
+    {"term_key":"lore:garona-halforcen","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Garona Halforcen","target_locale":"zh-TW","target_name":"迦羅娜‧半血","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-26"},
+    {"term_key":"lore:king-llane","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"King Llane","target_locale":"zh-TW","target_name":"萊恩王","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-26"},
+    {"term_key":"lore:great-sea","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Great Sea","target_locale":"zh-TW","target_name":"無盡之海","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-26"},
+    {"term_key":"lore:lordaeron","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Lordaeron","target_locale":"zh-TW","target_name":"羅德隆","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-29"},
+    {"term_key":"lore:terenas-menethil","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Terenas Menethil II","target_locale":"zh-TW","target_name":"泰瑞納斯‧米奈希爾二世","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-29"},
+    {"term_key":"lore:alliance-of-lordaeron","entity_type":"faction","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Alliance of Lordaeron","target_locale":"zh-TW","target_name":"羅德隆聯盟","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-29"},
+    {"term_key":"lore:amani-trolls","entity_type":"faction","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Amani trolls","target_locale":"zh-TW","target_name":"阿曼尼食人妖","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-31"},
+    {"term_key":"lore:demon-soul","entity_type":"artifact","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Demon Soul","target_locale":"zh-TW","target_name":"惡魔之魂","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-31"},
+    {"term_key":"lore:ironforge","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Ironforge","target_locale":"zh-TW","target_name":"鐵爐堡","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-32"},
+    {"term_key":"lore:quelthalas","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Quel'Thalas","target_locale":"zh-TW","target_name":"奎爾薩拉斯","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-32"},
+    {"term_key":"lore:anasterian-sunstrider","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Anasterian Sunstrider","target_locale":"zh-TW","target_name":"安納斯提安‧逐日者","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-32"},
+    {"term_key":"lore:alleria-windrunner","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Alleria Windrunner","target_locale":"zh-TW","target_name":"艾蘭里亞‧風行者","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-32"},
+    {"term_key":"lore:blackrock-spire","entity_type":"place","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Blackrock Spire","target_locale":"zh-TW","target_name":"黑石塔","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-38"},
+    {"term_key":"lore:turalyon","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Turalyon","target_locale":"zh-TW","target_name":"圖拉揚","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-39"},
+    {"term_key":"lore:arthas","entity_type":"character","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Arthas","target_locale":"zh-TW","target_name":"阿薩斯","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-44"},
+    {"term_key":"lore:night-elves","entity_type":"faction","product_scope":["warcraft_iii","world_of_warcraft"],"source_name":"Night Elves","target_locale":"zh-TW","target_name":"夜精靈","evidence_status":"official_reference","source_key":"blizzard-wc3-story-so-far-23229617-zh-tw","source_locator":"zh-TW:line-44"}
+  ]
+}
