@@ -12,7 +12,7 @@ The writer produces a patch mapping stable string keys to final Chinese. The rev
 
 The reviewer must inspect every record, not a sample. The evidence must be a manifest containing the source fingerprint, every reviewed stable key, the reviewed count, and an issues array. A bare empty array is never sufficient evidence of full review.
 
-Before release, group all visible records by exact source text and fail on competing translations unless each variation is listed in an explicit context exception. Re-run the glossary scan after applying reviewer fixes; a terminology decision is not complete until every source occurrence uses the canonical target in campaign, maps, object data, scripts, quests, and UI.
+Before release, group exact source text within the same semantic entity/field and fail on competing translations unless every affected writer record supplies a non-empty `consistency_exception` reason. Do not merge same-named different entities. Re-run the glossary and entity-link scans after applying reviewer fixes; a terminology decision is not complete until every occurrence resolved to that entity/surface uses the adjudicated target or a narrowly sourced alias.
 
 ## Review issue schema
 
@@ -46,7 +46,7 @@ Severity:
 - `medium`: omission, terminology mismatch, unnatural dialogue, or misleading UI;
 - `low`: polish or consistency issue that remains visible.
 
-A segment passes only when its report is an empty valid JSON array.
+A segment passes only when its report is a valid JSON object with complete, unique `reviewed_keys`, matching `reviewed_count` and source fingerprint, and an empty `issues` array. A bare `[]` always fails.
 
 ## Automated gates
 
@@ -72,6 +72,24 @@ Automated gates must detect:
 - known machine-translation artifacts;
 - residual Latin words for human classification;
 - numeric differences for manual gameplay review.
+
+For terminology and ability mentions, first import evidence and campaign decisions as described in [terminology-registry.md](terminology-registry.md), then build [entity-link-audit.md](entity-link-audit.md). The release invocation is:
+
+```powershell
+python scripts/semantic_review_gate.py `
+  --records quality/writer-*.json --reviews quality/review-manifest-*.json `
+  --glossary quality/glossary.json `
+  --entity-manifest quality/entity-links.json `
+  --term-db quality/war3-terms.sqlite --term-source-root quality/extracted-evidence `
+  --object-root final-extracted `
+  --expected-campaign campaign-sha256-or-stable-id `
+  --expected-source-locale en-US --expected-target-locale zh-CN `
+  --expected-client-version 1.31.1 --expected-distribution classic `
+  --require-entity-audit `
+  --out quality/semantic-review-gate.json
+```
+
+Legacy invocations without entity inputs still run the older review checks for compatibility, but are not release evidence. `--require-entity-audit` also requires independently supplied campaign/source locale/target locale/client version/distribution values; missing or mismatched context, manifests/database, unresolved bindings, source gaps, and display/description name differences become a nonzero release failure.
 
 Approved exceptions must be explicit and narrow. For intentional numeric changes, repeat `--allow-number-diff <location>` with the exact report location. For intentional control changes, repeat `--allow-control-diff <location>`. Do not globally disable a gate because a few source strings are malformed.
 

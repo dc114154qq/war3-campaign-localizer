@@ -48,6 +48,8 @@ Record the object rawcode and field tag for context. Common visible fields inclu
 
 Inventory both `TRIGSTR_*` references and direct null-terminated strings in object/metadata binaries. The latter list deliberately includes paths, raw labels, and other noise; classify every candidate, translate only fields proven player-visible, and leave every other string byte-for-byte unchanged.
 
+For terminology linkage, record object identity as campaign/map scope + object type + rawcode/stable key. WTS IDs remain text references only. `campaign_inventory.py` supplies broad candidates and TRIGSTR locations; it does **not** parse `uabi`/`uhab` or manufacture entity/mention coverage. Build the manifest described in [entity-link-audit.md](entity-link-audit.md) from a separately verified object parser or the documented `manual_verified` contract. Do not infer inherited values without matching-version base object data; record dynamic or unresolved references explicitly so the release gate fails closed.
+
 ### Map WTS
 
 Treat every real `STRING` block as in scope on the first pass. WTS often contains comments between the `STRING` line and opening brace:
@@ -114,5 +116,6 @@ The report must include:
 - likely text-bearing visual assets;
 - audio/video assets;
 - duplicates, missing references, and decoding failures.
+- broad candidates needed to create separately reviewed scoped entity/ability/mention evidence; the inventory report alone is not that evidence.
 
 Use this report to define translation segments and final expected counts.

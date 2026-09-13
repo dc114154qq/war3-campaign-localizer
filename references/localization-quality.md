@@ -23,16 +23,13 @@ Use natural, restrained Chinese that fits Warcraft III: direct military objectiv
 
 ## Terminology
 
-Build a campaign glossary before translation and keep it versioned. Prefer, in order:
+Read [terminology-registry.md](terminology-registry.md) and identify terms by entity, product, locale, client version, and distribution. Exact-version Warcraft III official evidence wins; reliable secondary evidence must remain labeled. Never borrow a WoW translation or another Chinese region/release silently. If evidence is missing, mark the term unresolved for human adjudication rather than presenting model memory as official.
 
-1. official Chinese Warcraft terminology available in local game strings;
-2. established high-quality Chinese campaign usage;
-3. consistent transliteration for original proper nouns;
-4. a concise descriptive translation when a custom mechanic needs clarity.
+Custom objects and author renames use scoped `campaign_override` decisions. Resolve names separately for campaign/map, object type, rawcode/stable key, inheritance, level, form, and display role. Never use WTS ID as entity identity.
 
-Never let the same skill, item, unit, character, place, or faction use different names between dialogue, objectives, buttons, and object tooltips.
+Keep one canonical target per resolved entity/surface across dialogue, objectives, buttons, and tooltips. Identical source spelling does not prove identical identity: do not merge different entities or intentional contextual senses. Within one identity, competing names are defects unless an evidence-backed alias is explicitly scoped. Re-scan all visible payloads after each decision; a residual-English scan cannot find two plausible but inconsistent Chinese names.
 
-After drafting, group identical source strings across every layer and choose one canonical target. Treat unexplained variants as translation defects, even when each individual sentence is grammatical. Re-scan all visible payloads after every glossary change; checking only records that contain no English is insufficient because competing Chinese terms can both pass a residual scan.
+For unit and hero descriptions, follow [entity-link-audit.md](entity-link-audit.md): prove the actual ability binding, then compare the mention against the relevant button/learning name. Display-only color and hotkey codes may be normalized for comparison, but the tool must not rewrite the text or erase levels, forms, or placeholders.
 
 ## Dialogue
 

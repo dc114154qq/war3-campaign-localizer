@@ -13,6 +13,8 @@ Read these before acting:
 
 - [references/corpus-discovery.md](references/corpus-discovery.md) before deciding what must be translated.
 - [references/localization-quality.md](references/localization-quality.md) before drafting or reviewing Chinese.
+- [references/terminology-registry.md](references/terminology-registry.md) before accepting Warcraft terminology or importing evidence.
+- [references/entity-link-audit.md](references/entity-link-audit.md) before resolving object abilities or auditing tooltip mentions.
 - [references/review-and-release.md](references/review-and-release.md) before accepting a segment or writing an archive.
 
 ## Non-negotiable outcome
@@ -47,7 +49,9 @@ Read these before acting:
 
 3. **Establish terminology and voice**
    - Identify the source language(s), regional spelling, register, and name-pronunciation rules before translating. Translate directly from the original language whenever it can be understood reliably; do not route all languages through an English machine draft.
-   - Create a glossary before bulk translation: official Warcraft names, factions, places, UI phrases, recurring custom names, skill names, item names, and hotkeys.
+   - Record the exact Warcraft III client version, distribution, and target locale. Import only auditable evidence into `scripts/term_registry.py`; never mix WoW, `zh-CN`/`zh-TW`, or different releases.
+   - Query by scoped entity identity. Use exact-version Warcraft III official evidence first; if it is absent or ambiguous, retain the candidates and mark the term for human adjudication instead of inventing an “official” name.
+   - Create a glossary before bulk translation: sourced official terms, clearly labeled custom decisions, factions, places, UI phrases, recurring names, skill names, item names, and hotkeys. Import final custom decisions as scoped `campaign_override` records.
    - If a high-quality Chinese campaign is available, use it only as a style and terminology reference; never copy unrelated prose.
    - Lock glossary choices across all chapters and object data.
 
@@ -57,6 +61,7 @@ Read these before acting:
    - Require the assigned writer to read the source record and write the Chinese itself; do not call a translation service, translation model endpoint, browser translator, or bulk substitution tool.
    - Translate meaning, not word order. Dialogue must sound spoken; quests must state the exact action; tooltips must state targets, values, timing, and exceptions unambiguously.
    - Preserve all control codes, placeholders, raw field references, line breaks, and hotkey behavior.
+   - Build the entity-link manifest from unit/hero ability lists and object references. Resolve each unit-description skill mention to the actual ability entity and its button/learning name; WTS IDs are text locations, not entity identities. Missing base data or dynamic/unresolved references block release.
 
 5. **Run an independent full review**
    - A reviewer other than the writer must compare every source/localized pair, not merely sample.
@@ -64,14 +69,14 @@ Read these before acting:
    - Return a review manifest, not only an issue list. Each segment manifest must contain the source fingerprint, the complete `reviewed_keys` list (stable WTS ID or script/object key), `reviewed_count`, and an `issues` array with exact replacement text. An empty issues array without complete coverage evidence is invalid.
    - Apply fixes and re-review until every segment manifest has complete key coverage, a matching source fingerprint, and an empty `issues` array. Run `scripts/semantic_review_gate.py` before packaging.
    - The reviewer must actively search for machine-translation artifacts and “translated-looking” nonsense (repeated characters, wrong part of speech, literal UI terms, mixed scripts, mojibake, and source fragments). A clean residual-English scan is not sufficient evidence of quality.
-   - Group records by identical source text and require one canonical translation for every group. Any intentional variation must be listed by stable key with a reason; otherwise it is a release blocker.
-   - Re-run the terminology audit after every review pass. Every glossary term must have one canonical target across campaign WTS, map WTS, object fields, scripts, quests, and UI; a term appearing in a visible source but absent or replaced by a competing target is a release blocker.
+   - Group identical source text within the same semantic entity/field. Do not conflate same-named different entities; list genuine contextual variations by stable key with a reason.
+   - Re-run the terminology and entity-link audits after every review pass. Each resolved entity/surface must use its adjudicated target across campaign WTS, map WTS, object fields, scripts, quests, and UI; competing targets or subtle description/button differences block release unless an evidence-backed alias is explicitly scoped.
    - “No source-language text remains” and “all IDs exist” are structural checks, not translation approval.
 
 6. **Merge and release**
    - Apply reviewed patches to a fresh clean extraction.
    - Run WTS tree verification, residual scans, glossary consistency scans, and the release gates in the review reference.
-   - Run `scripts/semantic_review_gate.py` against all writer records, review manifests, and the final glossary. A pass requires full review coverage, zero unresolved issues, zero unexplained same-source translation splits, and zero glossary conflicts.
+   - Run `scripts/semantic_review_gate.py --require-entity-audit` against all writer records, review manifests, the final glossary, every entity-link manifest, the terminology database, and the final extracted object/WTS tree. Supply the independently established campaign, source/target locale, client version, and distribution through every `--expected-*` option; manifest self-declaration is not release evidence. A pass requires full review coverage, zero unresolved issues, zero unexplained within-entity splits, zero glossary conflicts, and zero entity-term issues.
    - Run `scripts/speaker_name_audit.py` against the final extracted maps. A translated dialogue body does not prove its speaker label or runtime unit name was translated.
    - Run text-only structural verification for every changed W3F, object file, and script. Any non-text delta is a release blocker.
    - Rebuild nested maps first, then the campaign, preserving entry storage flags at both layers.
@@ -87,8 +92,11 @@ Do not package a final release while any of these remain:
 - non-empty independent review reports;
 - review reports that are plain arrays, lack a source fingerprint, omit any stable key, or claim a count different from the covered keys;
 - any visible record not listed in exactly one independent review manifest;
-- unexplained multiple translations for one identical source string;
+- unexplained multiple translations for one identical source string within the same semantic entity/field;
 - a glossary term with competing visible targets or a missing canonical target in a source occurrence;
+- a terminology decision without exact product/locale/version/distribution evidence or an explicit scoped campaign override;
+- a unit ability scan, ability binding, description mention, base-data inheritance, or entity-term decision that is missing, duplicate, wrong, dynamic, or unresolved;
+- a description mention that differs from the resolved skill bar/learning name after display-only color/hotkey normalization, unless a sourced alias is explicitly scoped to that mention;
 - unapproved control-code or placeholder differences;
 - known machine-translation artifacts, replacement characters, or literal escape text;
 - any record produced or drafted by a machine-translation engine, translation API, browser translator, LLM batch-translation endpoint, MT cache, or bulk dictionary pass;
@@ -107,6 +115,7 @@ Provide:
 - source and output SHA256;
 - translated/reviewed record counts by layer and chapter;
 - glossary and intentional untranslated-name exceptions;
+- terminology source summary, exact client/locale decisions, unresolved ambiguities, and entity-link audit report;
 - independent review status;
 - archive and client compatibility evidence;
 - backup path and any remaining validation gap.
